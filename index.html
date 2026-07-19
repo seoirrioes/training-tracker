@@ -4,13 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Training Tracker</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
   <div class="app">
-    <header>
-      <h1>Training Tracker</h1>
-      <p class="subtitle">Rotation Tag 1–4 · Gewichte, Wiederholungen, Timer</p>
+    <header class="hero">
+      <div>
+        <h1>Training Tracker</h1>
+        <p class="subtitle">Rotation Tag 1–4 · Satz für Satz · iPhone-tauglich</p>
+      </div>
+      <div class="hero-chip">Sven Edition</div>
     </header>
 
     <section class="panel topbar">
@@ -24,7 +27,35 @@
       </div>
       <div class="actions">
         <button id="saveSessionBtn">Training speichern</button>
-        <button id="completeDayBtn" class="secondary">Als erledigt + nächster Tag</button>
+        <button id="completeDayBtn" class="secondary">Training abschließen</button>
+      </div>
+    </section>
+
+    <section class="dashboard">
+      <div class="panel stat-card">
+        <div class="stat-label">Übungen heute</div>
+        <div class="stat-value" id="exerciseCount">0</div>
+      </div>
+      <div class="panel stat-card progress-card">
+        <div class="stat-label">Fortschritt</div>
+        <div class="progress-row">
+          <div class="progress-bar"><div id="progressFill" class="progress-fill"></div></div>
+          <div id="progressText" class="progress-text">0/0 Sätze erledigt</div>
+        </div>
+      </div>
+      <div class="panel timer-box">
+        <div class="timer-label">Pausentimer</div>
+        <div id="timerDisplay" class="timer">01:30</div>
+        <div class="timer-actions">
+          <button data-seconds="60" class="timerPreset ghost">1:00</button>
+          <button data-seconds="90" class="timerPreset ghost">1:30</button>
+          <button data-seconds="120" class="timerPreset ghost">2:00</button>
+        </div>
+        <div class="timer-actions">
+          <button id="startTimerBtn">Start</button>
+          <button id="pauseTimerBtn" class="secondary">Pause</button>
+          <button id="resetTimerBtn" class="secondary">Reset</button>
+        </div>
       </div>
     </section>
 
@@ -35,20 +66,6 @@
             <h2 id="dayTitle">Tag 1</h2>
             <p id="dayMeta"></p>
           </div>
-          <div class="timer-box">
-            <div class="timer-label">Pausentimer</div>
-            <div id="timerDisplay" class="timer">01:30</div>
-            <div class="timer-actions">
-              <button data-seconds="60" class="timerPreset">1:00</button>
-              <button data-seconds="90" class="timerPreset">1:30</button>
-              <button data-seconds="120" class="timerPreset">2:00</button>
-            </div>
-            <div class="timer-actions">
-              <button id="startTimerBtn">Start</button>
-              <button id="pauseTimerBtn" class="secondary">Pause</button>
-              <button id="resetTimerBtn" class="secondary">Reset</button>
-            </div>
-          </div>
         </div>
         <div id="exerciseList" class="exercise-list"></div>
       </div>
@@ -58,12 +75,12 @@
         <div id="historyHint" class="hint">Wähle eine Übung, um den letzten Eintrag zu sehen.</div>
         <div id="historyBox"></div>
         <hr />
-        <h3>Heute notieren</h3>
+        <h3>Einheitsnotiz</h3>
         <textarea id="sessionNotes" rows="7" placeholder="z. B. Hüfte okay, Satz 3 schwer, nächstes Mal steigern..."></textarea>
       </aside>
     </section>
   </div>
 
-  <script src="app.js"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
