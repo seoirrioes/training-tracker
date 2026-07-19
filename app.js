@@ -285,6 +285,30 @@ function saveCurrentSession() {
   saveState();
 }
 
+function clearExerciseData(exerciseName, setCount, targetReps) {
+  const session = getCurrentSession();
+  session.exercises[exerciseName] = {
+    sets: Array.from({ length: setCount }, () => ({ weight: '', reps: targetReps || '', done: false })),
+    note: ''
+  };
+  saveState();
+}
+
+function resetWorkout() {
+  const day = getDay(getSelectedDayId());
+  const session = getCurrentSession();
+  for (const exercise of day.exercises) {
+    session.exercises[exercise.name] = {
+      sets: Array.from({ length: exercise.sets }, () => ({ weight: '', reps: exercise.reps || '', done: false })),
+      note: ''
+    };
+  }
+  session.notes = '';
+  $('sessionNotes').value = '';
+  saveState();
+  render();
+}
+
 function renderExercises(day) {
   const list = $('exerciseList');
   list.innerHTML = '';
@@ -323,15 +347,17 @@ function renderExercises(day) {
       const row = document.createElement('div');
       row.className = `set-row ${set.done ? 'is-done' : ''}`;
       row.innerHTML = `
-        <div class="set-label">${index + 1}</div>
-        <input class="weightInput" type="text" value="${set.weight || ''}" placeholder="kg">
-        <input class="repsInput" type="text" value="${set.reps || ''}" placeholder="Wdh.">
-        <button class="doneBtn ${set.done ? 'done' : ''}">${set.done ? '✓' : '○'}</button>
+        <div class="set-cell full"><div class="set-label">Satz ${index + 1}</div></div>
+        <div class="set-cell"><label>Gewicht</label><input class="weightInput" type="text" value="${set.weight || ''}" placeholder="kg"></div>
+        <div class="set-cell"><label>Wdh.</label><input class="repsInput" type="text" value="${set.reps || ''}" placeholder="Wdh."></div>
+        <div class="set-cell"><label>Erledigt</label><button class="doneBtn ${set.done ? 'done' : ''}">${set.done ? '✓' : '○'}</button></div>
+        <div class="set-cell"><label>Reset</label><button class="resetSetBtn">↺</button></div>
       `;
 
       const weightInput = row.querySelector('.weightInput');
       const repsInput = row.querySelector('.repsInput');
       const doneBtn = row.querySelector('.doneBtn');
+      const resetSetBtn = row.querySelector('.resetSetBtn');
 
       const persist = () => {
         data.sets[index].weight = weightInput.value.trim();
@@ -356,6 +382,14 @@ function renderExercises(day) {
         renderHistory(exercise.name);
       });
 
+      resetSetBtn.addEventListener('click', () => {
+        data.sets[index] = { weight: '', reps: exercise.reps || '', done: false };
+        session.exercises[exercise.name] = data;
+        saveState();
+        render();
+        renderHistory(exercise.name);
+      });
+
       table.appendChild(row);
     });
 
@@ -368,6 +402,7 @@ function renderExercises(day) {
       </div>
       <div class="footer-actions">
         <button class="ghost fillLastBtn">Letzte Werte übernehmen</button>
+        <button class="ghost resetExerciseBtn">Übung zurücksetzen</button>
         <button class="ghost markExerciseBtn">Übung fertig</button>
       </div>
     `;
@@ -390,6 +425,12 @@ function renderExercises(day) {
       session.exercises[exercise.name] = data;
       saveState();
       render();
+    });
+
+    footer.querySelector('.resetExerciseBtn').addEventListener('click', () => {
+      clearExerciseData(exercise.name, exercise.sets, exercise.reps);
+      render();
+      renderHistory(exercise.name);
     });
 
     footer.querySelector('.markExerciseBtn').addEventListener('click', () => {
@@ -432,6 +473,10 @@ async function init() {
   $('saveSessionBtn').addEventListener('click', () => {
     saveCurrentSession();
     alert('Training gespeichert.');
+  });
+  $('resetWorkoutBtn').addEventListener('click', () => {
+    if (!confirm('Aktuelles Training wirklich zurücksetzen?')) return;
+    resetWorkout();
   });
   $('completeDayBtn').addEventListener('click', () => {
     saveCurrentSession();
