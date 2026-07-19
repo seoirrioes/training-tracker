@@ -1,0 +1,61 @@
+{
+  "days": [
+    {
+      "id": 1,
+      "name": "Tag 1 – Ganzkörper A (schwer)",
+      "cardio": "15 Minuten lockeres Laufband (Steigung 8–12 %)",
+      "exercises": [
+        {"name": "Kniebeuge oder Hackenschmidt", "sets": 4, "reps": "6–8"},
+        {"name": "Bankdrücken", "sets": 4, "reps": "6–8"},
+        {"name": "Klimmzüge oder Latzug", "sets": 4, "reps": "8–10"},
+        {"name": "Schulterdrücken", "sets": 3, "reps": "8–10"},
+        {"name": "Rudern sitzend", "sets": 3, "reps": "10"},
+        {"name": "Plank", "sets": 3, "reps": "60 Sekunden"}
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Tag 2 – Beinfokus + Core",
+      "cardio": "10–15 Minuten lockeres Fahrrad",
+      "exercises": [
+        {"name": "Beinpresse", "sets": 4, "reps": "10–12"},
+        {"name": "Rumänisches Kreuzheben", "sets": 4, "reps": "8–10"},
+        {"name": "Bulgarian Split Squats", "sets": 3, "reps": "10"},
+        {"name": "Beinbeuger", "sets": 3, "reps": "12"},
+        {"name": "Beinstrecker", "sets": 3, "reps": "15"},
+        {"name": "Wadenheben", "sets": 4, "reps": "15"},
+        {"name": "Hanging Leg Raises", "sets": 3, "reps": "12"}
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Tag 3 – Ganzkörper B",
+      "cardio": "15 Minuten Crosstrainer",
+      "exercises": [
+        {"name": "Hip Thrust", "sets": 4, "reps": "8"},
+        {"name": "Schrägbankdrücken", "sets": 4, "reps": "8"},
+        {"name": "Brustgestütztes Rudern", "sets": 4, "reps": "8"},
+        {"name": "Seitheben", "sets": 3, "reps": "15"},
+        {"name": "Face Pulls", "sets": 3, "reps": "15"},
+        {"name": "Bizeps", "sets": 3, "reps": "10"},
+        {"name": "Trizeps", "sets": 3, "reps": "10"}
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Tag 4 – Ganzkörper C (Pump & Stoffwechsel)",
+      "cardio": "20 Minuten zügiges Gehen",
+      "notes": "Pausen 45–60 Sekunden",
+      "exercises": [
+        {"name": "Goblet Squats", "sets": 3, "reps": "15"},
+        {"name": "Brustpresse", "sets": 3, "reps": "15"},
+        {"name": "Kabelrudern", "sets": 3, "reps": "15"},
+        {"name": "Schulterpresse Maschine", "sets": 3, "reps": "15"},
+        {"name": "Beincurls", "sets": 3, "reps": "15"},
+        {"name": "Butterfly Reverse", "sets": 3, "reps": "15"},
+        {"name": "Bizeps + Trizeps Supersatz", "sets": 3, "reps": "15"},
+        {"name": "Bauchzirkel", "sets": 1, "reps": "10 Minuten"}
+      ]
+    }
+  ]
+}

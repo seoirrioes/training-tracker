@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Training Tracker</h1>
+      <p class="subtitle">Rotation Tag 1–4 · Gewichte, Wiederholungen, Timer</p>
+    </header>
+
+    <section class="panel topbar">
+      <div>
+        <label for="daySelect">Trainingstag</label>
+        <select id="daySelect"></select>
+      </div>
+      <div>
+        <label for="trainingDate">Datum</label>
+        <input id="trainingDate" type="date" />
+      </div>
+      <div class="actions">
+        <button id="saveSessionBtn">Training speichern</button>
+        <button id="completeDayBtn" class="secondary">Als erledigt + nächster Tag</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="panel main-panel">
+        <div class="day-header">
+          <div>
+            <h2 id="dayTitle">Tag 1</h2>
+            <p id="dayMeta"></p>
+          </div>
+          <div class="timer-box">
+            <div class="timer-label">Pausentimer</div>
+            <div id="timerDisplay" class="timer">01:30</div>
+            <div class="timer-actions">
+              <button data-seconds="60" class="timerPreset">1:00</button>
+              <button data-seconds="90" class="timerPreset">1:30</button>
+              <button data-seconds="120" class="timerPreset">2:00</button>
+            </div>
+            <div class="timer-actions">
+              <button id="startTimerBtn">Start</button>
+              <button id="pauseTimerBtn" class="secondary">Pause</button>
+              <button id="resetTimerBtn" class="secondary">Reset</button>
+            </div>
+          </div>
+        </div>
+        <div id="exerciseList" class="exercise-list"></div>
+      </div>
+
+      <aside class="panel side-panel">
+        <h3>Verlauf</h3>
+        <div id="historyHint" class="hint">Wähle eine Übung, um den letzten Eintrag zu sehen.</div>
+        <div id="historyBox"></div>
+        <hr />
+        <h3>Heute notieren</h3>
+        <textarea id="sessionNotes" rows="7" placeholder="z. B. Hüfte okay, Satz 3 schwer, nächstes Mal steigern..."></textarea>
+      </aside>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
