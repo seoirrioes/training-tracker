@@ -1,4 +1,22 @@
 const STORAGE_KEY = 'training-webapp-state-v1';
+const SEEDED_DATA = {
+  currentDay: 2,
+  sessions: [
+    {
+      date: '2026-07-17',
+      day: 1,
+      notes: '',
+      exercises: {
+        'Kniebeuge oder Hackenschmidt': { weight: 'ohne Zusatzgewicht', repsDone: '6–8', note: '' },
+        'Bankdrücken': { weight: '12,5', repsDone: '6–8', note: '' },
+        'Klimmzüge oder Latzug': { weight: '59', repsDone: '8–10', note: '' },
+        'Schulterdrücken': { weight: '15', repsDone: '8–10', note: '' },
+        'Rudern sitzend': { weight: '59', repsDone: '10', note: '' },
+        'Plank': { weight: '', repsDone: '60 Sekunden', note: '' },
+      },
+    },
+  ],
+};
 
 const state = {
   plan: null,
@@ -11,9 +29,14 @@ const state = {
 
 function loadState() {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || { sessions: [], currentDay: 1 };
+    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (stored) {
+      if (!stored.sessions?.length) return JSON.parse(JSON.stringify(SEEDED_DATA));
+      return stored;
+    }
+    return JSON.parse(JSON.stringify(SEEDED_DATA));
   } catch {
-    return { sessions: [], currentDay: 1 };
+    return JSON.parse(JSON.stringify(SEEDED_DATA));
   }
 }
 
@@ -45,6 +68,10 @@ function getExerciseHistory(name) {
     if (s.exercises?.[name]) items.push({ date: s.date, ...s.exercises[name] });
   }
   return items.slice(0, 5);
+}
+
+function getLastExerciseEntry(name) {
+  return getExerciseHistory(name)[0] || null;
 }
 
 async function init() {
@@ -111,6 +138,9 @@ function render() {
   list.innerHTML = '';
   for (const exercise of day.exercises) {
     const saved = session.exercises?.[exercise.name] || {};
+    const lastEntry = getLastExerciseEntry(exercise.name);
+    const prefilledWeight = saved.weight ?? lastEntry?.weight ?? '';
+    const prefilledReps = saved.repsDone ?? lastEntry?.repsDone ?? exercise.reps;
     const card = document.createElement('div');
     card.className = 'exercise-card';
     card.innerHTML = `
@@ -124,17 +154,18 @@ function render() {
       <div class="exercise-grid">
         <div>
           <label>Gewicht (kg)</label>
-          <input type="text" class="weightInput" value="${saved.weight ?? ''}" placeholder="z. B. 60" />
+          <input type="text" class="weightInput" value="${prefilledWeight}" placeholder="z. B. 60" />
         </div>
         <div>
           <label>Ist-Wdh.</label>
-          <input type="text" class="repsInput" value="${saved.repsDone ?? exercise.reps}" placeholder="z. B. 8/8/7/6" />
+          <input type="text" class="repsInput" value="${prefilledReps}" placeholder="z. B. 8/8/7/6" />
         </div>
         <div>
           <label>Notiz</label>
           <input type="text" class="noteInput" value="${saved.note ?? ''}" placeholder="z. B. schwer / sauber" />
         </div>
       </div>
+      ${lastEntry ? `<div class="exercise-meta" style="margin-top:10px">Letzter Wert: ${lastEntry.weight || '—'} · Wdh.: ${lastEntry.repsDone || '—'} · ${lastEntry.date}</div>` : ''}
     `;
     const [weightInput, repsInput, noteInput] = card.querySelectorAll('input');
     [weightInput, repsInput, noteInput].forEach(input => input.addEventListener('change', () => {
